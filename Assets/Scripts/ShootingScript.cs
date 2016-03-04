@@ -26,13 +26,16 @@ public class ShootingScript : MonoBehaviour
 		//If we "fire"...
 		if (Input.GetButtonDown("Fire1"))
 		{
+			Debug.Log ("Fire");
 			//...play our audio...
+
 			gunFireAudio.Stop();
 			gunFireAudio.Play();
 
 			//...and create a ray
 			if (Physics.Raycast(transform.position, transform.forward, out rayHit, 100f))
 			{
+				Debug.Log ("Hit");
 				//If the ray hits something (didn't shoot the sky), move the impact effect to that
 				//location and play it
 				impactEffect.transform.position = rayHit.point;
@@ -40,29 +43,22 @@ public class ShootingScript : MonoBehaviour
 				impactEffect.Stop();
 				impactEffect.Play();
 
-				
 				//If we hit an enemy Destroy it
 				if (rayHit.transform.tag == "Enemy")
 					Destroy(rayHit.transform.gameObject);
 
-
 				// If we hit the pause button 
 				if (rayHit.transform.tag == "Pause")
 					Pause();
-				
-
 			}
 		}
 	}
-
 
 	public void Pause()
 	{
 		Time.timeScale = Time.timeScale == 0 ? 1 : 0;
 		//Lowpass ();
-
 	}
-
 
 	void Lowpass()
 	{
@@ -70,9 +66,7 @@ public class ShootingScript : MonoBehaviour
 		{
 			paused.TransitionTo(.01f);
 		}
-
 		else
-
 		{
 			unpaused.TransitionTo(.01f);
 		}
@@ -86,7 +80,4 @@ public class ShootingScript : MonoBehaviour
 		Application.Quit();
 		#endif
 	}
-
-
-
 }
